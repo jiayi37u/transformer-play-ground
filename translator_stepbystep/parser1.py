@@ -1,0 +1,32 @@
+import argparse
+
+import torch
+
+
+parser1 = argparse.ArgumentParser()
+
+parser1.add_argument('--train-file', default='../data/train.txt')
+parser1.add_argument('--dev-file', default='../data/dev.txt')
+
+parser1.add_argument('--UNK', default=0, type=int)
+parser1.add_argument('--PAD', default=1, type=int)
+
+# TODO 常改动参数
+parser1.add_argument('--type', default='train') # 默认是训练模式, 若传递 "evaluate" 则对 dev数据集进行预测输出
+parser1.add_argument('--gpu', default=0, type=int) # gpu 卡号
+parser1.add_argument('--epochs', default=10, type=int) # 训练轮数
+parser1.add_argument('--layers', default=3, type=int) # transformer层数
+parser1.add_argument('--h-num', default=4, type=int) # multihead attention hidden层数
+parser1.add_argument('--batch-size', default=128, type=int)
+parser1.add_argument('--d-model', default=256, type=int)
+parser1.add_argument('--d-ff', default=512, type=int)
+parser1.add_argument('--dropout', default=0.1, type=float)
+parser1.add_argument('--max-length', default=60, type=int)
+parser1.add_argument('--save-file', default='save/model.pt') # 模型保存位置
+
+
+args = parser1.parse_args()
+
+device = torch.device(f"cuda:{args.gpu}" if torch.cuda.is_available() else "cpu")
+# device = torch.device("cpu")
+args.device = device
